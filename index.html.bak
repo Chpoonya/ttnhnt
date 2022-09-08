@@ -135,7 +135,7 @@
       function showRewardedAd(){
         vkBridge.send('VKWebAppShowNativeAds',{ad_format:"reward"}).then(data => {
           console.log(data);
-          unityI.SendMessage('VKSDK', 'OnRewarded',JSON.stringify(data.result));})
+          unityI.SendMessage('VKSDK', 'RewardGetting',JSON.stringify(data.result));})
       }
 	  
 	  function PostOnWall(message, attachment){
