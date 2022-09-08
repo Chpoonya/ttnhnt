@@ -102,77 +102,45 @@
       document.body.appendChild(script);
     </script>
 	
-	<!-- Yandex Games SDK -->
-<script src="https://yandex.ru/games/sdk/v2"></script>
+	<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
 
-	<!-- Запуск рекламы при старте игры -->
-<script type="text/javascript">
-  var player;
-  var sdk;
-  var payments = null;
+    <script type="text/javascript">
 
+      vkBridge.send('VKWebAppInit');
 
-  YaGames.init({
-    adv: {
-      onAdvClose: wasShown => {
-        console.info('adv closed!');
+      function auth(){
+        vkBridge.send('VKWebAppGetUserInfo').then(_info =>{
+          console.log(_info);
+          unityI.SendMessage('VKSDK', 'AuthenticateSuccess', JSON.stringify(_info));
+        });
       }
-    }
-  })
-    .then(ysdk => {
-      sdk = ysdk;
-      sdk.adv.showFullscreenAdv({ callbacks: {} });
-    });
-	
-	function Start(){
-          var data = sdk.environment;
+
+      function getUserData(){
+        vkBridge.send("VKWebAppGetLaunchParams").then(data =>{
+        console.log(data);
+        unityI.SendMessage('VKSDK', 'DataGetting', JSON.stringify(data));
+      });}
+
+      function setUserData(data){
+        console.log(data);
+        vkBridge.send('VKWebAppStorageSet',{"key": "_save" , "value": data}).then(_info =>{
+          console.log("Saved!")});
+      }
+
+      function showFullscrenAd(){
+        vkBridge.send('VKWebAppShowNativeAds',{ad_format:"interstitial"}).then(data => {
+          console.log(data);});
+      }
+
+      function showRewardedAd(){
+        vkBridge.send('VKWebAppShowNativeAds',{ad_format:"reward"}).then(data => {
           console.log(data);
-          unityI.SendMessage('YandexLanguage','GettingLang',JSON.stringify(data));
-
-          var data = sdk.deviceInfo;
-          unityI.SendMessage('YandexLanguage','GettingDevice',JSON.stringify(data));
+          unityI.SendMessage('VKSDK', 'RewardGetting',JSON.stringify(data.result));})
       }
-</script>
-	<!-- Обработка рекламы в нужное время -->
-<script>
-  function showFullscrenAd() {
-    sdk.adv.showFullscreenAdv({
-      callbacks: {
-        onClose: function (wasShown) {
-          unityInstance.SendMessage('YandexSDK', 'OnInterstitialShown');
-        },
-        onError: function (error) {
-          unityInstance.SendMessage('YandexSDK', 'OnInterstitialFailed', error);
-        }
-      }
-    })
-  }
-</script>
-	<!-- Обработка рекламы за вознаграждение -->
-<script>
-  function showRewardedAd(id) {
-    sdk.adv.showRewardedVideo({
-      callbacks: {
-        onOpen: () => {
-          unityInstance.SendMessage('YandexSDK', 'OnRewardedOpen', id);
-          console.log('Video ad open. Id: ' + id);
-        },
-        onRewarded: () => {
-          unityInstance.SendMessage('YandexSDK', 'OnRewarded', id);
-          console.log('Rewarded! Id: ' + id);
-        },
-        onClose: () => {
-          unityInstance.SendMessage('YandexSDK', 'OnRewardedClose', id);
-          console.log('Video ad closed. Id: ' + id);
-        },
-        onError: (e) => {
-          var data = { "id": id, "error": error };
-          unityInstance.SendMessage('YandexSDK', 'OnRewardedError', JSON.stringify(data));
-          console.log('Error while open video ad:', e);
-        }
-      }
-    })
-  }
-</script>
+	  
+	  function PostOnWall(message, attachment){
+		vkBridge.send("VKWebAppShowWallPostBox", { "message": message, "attachments": attachment });
+	  }
+    </script>
   </body>
 </html>
