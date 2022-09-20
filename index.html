@@ -134,20 +134,15 @@
 	  }
 	  
 	  function ShowLeaderboard(score){
-		vkBridge.send("VKWebAppShowLeaderBoardBox", {user_result: score})
+		vkBridge.send("VKWebAppShowLeaderBoardBox")
          .then(data => console.log(data.success))  
         .catch(error => console.log(error));
 	  }
 	  
 	  function CallApiMethod(method, token, value){
-		vkBridge.send("VKWebAppCallAPIMethod", {"method": method, "params": {"access_token":token, "user_id": "1", "activity_id": "2", "value":value, "v":"5.131"}});
+		vkBridge.send("VKWebAppCallAPIMethod", {"method": method, "params": {"access_token": token, "user_id": "1", "activity_id": "2", "value":value, "v":"5.131"}});
 	  }
-	  
-	  function GetAccessToken(){
-		vkBridge.send("VKWebAppGetAuthToken", {"app_id": "51419230", "scope": ""}).then(data =>{console.log(data);
-		unityI.SendMessage("VKSDK", "SetAccess", JSON.stringify(data));
-		});
-	  }
+
     </script>
   </body>
 </html>
