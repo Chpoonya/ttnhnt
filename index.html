@@ -132,6 +132,17 @@
 	  function PostOnWall(message, attachment){
 		vkBridge.send("VKWebAppShowWallPostBox", { "message": message, "attachments": attachment });
 	  }
+	  
+	  function ShowLeaderboard(score){
+		vkBridge.send("VKWebAppShowLeaderBoardBox", {user_result: score})
+         .then(data => console.log(data.success))  
+        .catch(error => console.log(error));
+	  }
+	  
+	  function CallApiMethod(method, param){
+		vkBridge.send("VKWebAppCallAPIMethod", {"method": method, "params": param});
+	  }
+	  
     </script>
   </body>
 </html>

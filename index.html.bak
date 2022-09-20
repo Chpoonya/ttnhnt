@@ -102,7 +102,7 @@
       document.body.appendChild(script);
     </script>
 	
-	<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+	 <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
 
     <script type="text/javascript">
 
@@ -141,6 +141,13 @@
 	  function PostOnWall(message, attachment){
 		vkBridge.send("VKWebAppShowWallPostBox", { "message": message, "attachments": attachment });
 	  }
+	  
+	  function ShowLeaderboard(score){
+		vkBridge.send("VKWebAppShowLeaderBoardBox", {user_result: score})
+         .then(data => console.log(data.success))  
+        .catch(error => console.log(error));
+	  }
+	  
     </script>
   </body>
 </html>
