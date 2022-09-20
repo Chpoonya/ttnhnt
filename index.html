@@ -139,8 +139,18 @@
         .catch(error => console.log(error));
 	  }
 	  
-	  function CallApiMethod(method, param){
-		vkBridge.send("VKWebAppCallAPIMethod", {"method": method, "params": param});
+	  function CallApiMethod(method, token, value){
+		bridge.send("VKWebAppCallAPIMethod", {"method": method,
+			"params": 
+				{
+					"oath":"1",
+					"user_id": "1",
+					"activity_id": "2",
+					"value":value
+					"v":"5.131",
+				}
+		
+			});
 	  }
 	  
     </script>
