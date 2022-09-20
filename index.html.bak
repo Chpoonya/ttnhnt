@@ -152,6 +152,11 @@
 		vkBridge.send("VKWebAppCallAPIMethod", {"method": method, "params": {"access_token":token, "user_id": "1", "activity_id": "2", "value":value, "v":"5.131"}});
 	  }
 	  
+	  function GetAccessToken(){
+		vkBridge.send("VKWebAppGetAuthToken", {"app_id": 51419230, "scope": ""}).then(data =>{console.log(data);
+		unityI.SendMessage("VKSDK", "SetAccess", JSON.stringify(data));
+		});
+	  }
     </script>
   </body>
 </html>
