@@ -144,7 +144,7 @@
 	  }
 	  
 	  function GetAccessToken(){
-		vkBridge.send("VKWebAppGetAuthToken", {"app_id": 51419230, "scope": ""}).then(data =>{console.log(data);
+		vkBridge.send("VKWebAppGetAuthToken", {"app_id": "51419230", "scope": ""}).then(data =>{console.log(data);
 		unityI.SendMessage("VKSDK", "SetAccess", JSON.stringify(data));
 		});
 	  }
