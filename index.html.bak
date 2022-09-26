@@ -152,10 +152,11 @@
 		vkBridge.send("VKWebAppCallAPIMethod", {"method": method, "params": {"access_token": token, "user_id": "1", "activity_id": "2", "value":value, "v":"5.131"}});
 	  }
 		
-	  function AddToMenu(method, settings){
-	  vkBridge.send("VKWebAppCallAPIMethod", settings);
+	  function AddToMenu(){
+		vkBridge.send("VKWebAppAddToFavorites").then(data => {
+          console.log(data);
 	  }
-		
+		}
     </script>
   </body>
 </html>
