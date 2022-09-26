@@ -134,15 +134,19 @@
 	  }
 	  
 	  function ShowLeaderboard(score){
-		vkBridge.send("VKWebAppShowLeaderBoardBox")
+		vkBridge.send("VKWebAppShowLeaderBoardBox", {user_result: score})
          .then(data => console.log(data.success))  
         .catch(error => console.log(error));
 	  }
 	  
-	  function CallApiMethod(method, token, value){
+	  function AddPoints(method, token, value){
 		vkBridge.send("VKWebAppCallAPIMethod", {"method": method, "params": {"access_token": token, "user_id": "1", "activity_id": "2", "value":value, "v":"5.131"}});
 	  }
-
+		
+	  function AddToMenu(method, settings){
+	  vkBridge.send("VKWebAppCallAPIMethod", { "method": method, "params": { "settings": settings }});
+	  }
+		
     </script>
   </body>
 </html>
