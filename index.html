@@ -146,7 +146,7 @@
 	  function AddToMenu(){
 		vkBridge.send("VKWebAppAddToFavorites").then(data => {
           console.log(data);
-		  unityI.SendMessage("VKSDK", "BonusForFavorite", data);
+		  unityI.SendMessage("VKSDK", "BonusForFavorite", JSON.stringify(data));
 			})
 	   }
 	   
